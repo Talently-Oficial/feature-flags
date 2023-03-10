@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Miguel\FeatureFlags\Shared;
+namespace Talently\FeatureFlags\Shared;
 
 
 trait ArrayReflectionSerialize

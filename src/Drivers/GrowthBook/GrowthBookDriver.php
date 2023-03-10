@@ -1,11 +1,11 @@
 <?php
 
-namespace Miguel\FeatureFlags\Drivers\GrowthBook;
+namespace Talently\FeatureFlags\Drivers\GrowthBook;
 
 use Growthbook\Growthbook;
-use Miguel\FeatureFlags\Contracts\FeatureFlagService;
-use Miguel\FeatureFlags\Data\Dtos\User;
-use Miguel\FeatureFlags\Exceptions\NotFoundException;
+use Talently\FeatureFlags\Contracts\FeatureFlagService;
+use Talently\FeatureFlags\Data\Dtos\User;
+use Talently\FeatureFlags\Exceptions\NotFoundException;
 
 class GrowthBookDriver implements FeatureFlagService
 {

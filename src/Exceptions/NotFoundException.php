@@ -1,8 +1,8 @@
 <?php
 
-namespace Miguel\FeatureFlags\Exceptions;
+namespace Talently\FeatureFlags\Exceptions;
 
-use Miguel\FeatureFlags\Data\Constants\ExceptionCode;
+use Talently\FeatureFlags\Data\Constants\ExceptionCode;
 
 class NotFoundException extends \DomainException
 {

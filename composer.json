@@ -3,7 +3,7 @@
     "description": "Esta e una libreria para gestion de feature flags",
     "autoload": {
         "psr-4": {
-            "Miguel\\FeatureFlags\\": "src/"
+            "Talently\\FeatureFlags\\": "src/"
         }
     },
     "autoload-dev": {

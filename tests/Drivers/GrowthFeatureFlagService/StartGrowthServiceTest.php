@@ -2,8 +2,8 @@
 
 namespace Tests\Drivers\GrowthFeatureFlagService;
 
-use Miguel\FeatureFlags\Drivers\GrowthBook\GrowthBookDriver;
-use Miguel\FeatureFlags\Exceptions\NotFoundException;
+use Talently\FeatureFlags\Drivers\GrowthBook\GrowthBookDriver;
+use Talently\FeatureFlags\Exceptions\NotFoundException;
 use Mockery\Mock;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;

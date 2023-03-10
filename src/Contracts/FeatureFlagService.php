@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Miguel\FeatureFlags\Contracts;
+namespace Talently\FeatureFlags\Contracts;
 
 
-use Miguel\FeatureFlags\Data\Dtos\User;
+use Talently\FeatureFlags\Data\Dtos\User;
 
 interface FeatureFlagService
 {

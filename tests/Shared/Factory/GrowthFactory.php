@@ -2,7 +2,7 @@
 
 namespace Tests\Shared\Factory;
 
-use Miguel\FeatureFlags\Drivers\GrowthBook\GrowthBookDriver;
+use Talently\FeatureFlags\Drivers\GrowthBook\GrowthBookDriver;
 use Mockery\Mock;
 use Mockery\MockInterface;
 

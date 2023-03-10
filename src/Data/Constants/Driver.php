@@ -1,6 +1,6 @@
 <?php
 
-namespace Miguel\FeatureFlags\Data\Constants;
+namespace Talently\FeatureFlags\Data\Constants;
 
 class Driver
 {
