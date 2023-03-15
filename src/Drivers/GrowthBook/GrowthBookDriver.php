@@ -7,15 +7,32 @@ use Talently\FeatureFlags\Contracts\FeatureFlagService;
 use Talently\FeatureFlags\Data\Dtos\User;
 use Talently\FeatureFlags\Exceptions\NotFoundException;
 
+/**
+ * Class GrowthBookDriver
+ */
 class GrowthBookDriver implements FeatureFlagService
 {
 
+    /**
+     * list all features
+     * @var array
+     */
     private $features;
+
+    /**
+     * global growthbook instance
+     * @var Growthbook
+     */
     private $global;
 
+    /**
+     * global user
+     * @var
+     */
     private $user;
 
     /**
+     * consume the growthbook api
      * @param string $url
      */
     public function __construct(string  $url)
@@ -25,6 +42,11 @@ class GrowthBookDriver implements FeatureFlagService
 
     }
 
+    /**
+     * load features from the api
+     * @param string $url
+     * @return mixed
+     */
     public function loadFeatures(string $url)
     {
         $apiResponse = $this->getResponse($url);
@@ -36,17 +58,33 @@ class GrowthBookDriver implements FeatureFlagService
         return $apiResponse["features"];
     }
 
+    /**
+     * set a global user for the feature flag service
+     * @param User $user
+     * @return void
+     */
     public function setUser(User $user): void
     {
         $this->user = $user;
         $this->global =  $this->makeGrowthBook($user);
     }
 
+    /**
+     *
+     * @param string $featureFlagName
+     * @return bool
+     */
     public function show(string $featureFlagName): bool
     {
         return  $this->global->isOn($featureFlagName);
     }
 
+    /**
+     *
+     * @param string $featureFlagName
+     * @param User $user
+     * @return bool
+     */
     public function showForUser(string $featureFlagName, User $user): bool
     {
         return $this->makeGrowthBook($user)->isOn($featureFlagName);
@@ -68,6 +106,9 @@ class GrowthBookDriver implements FeatureFlagService
         return  $instance;
     }
 
+    /**
+     * @return array
+     */
     public function dump(): array
     {
         return  [
@@ -76,6 +117,9 @@ class GrowthBookDriver implements FeatureFlagService
         ];
     }
 
+    /**
+     * @return array|string[]
+     */
     public function features(): array
     {
         $features = [];
@@ -100,11 +144,17 @@ class GrowthBookDriver implements FeatureFlagService
         }
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @return Growthbook|null
+     */
     public function getGlobal(): ?Growthbook
     {
         return $this->global;

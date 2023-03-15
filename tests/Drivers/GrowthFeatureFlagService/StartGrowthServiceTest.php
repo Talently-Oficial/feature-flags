@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Shared\Factory\GrowthFactory;
 
 /**
- *
+ * Class StartGrowthServiceTest
  */
 class StartGrowthServiceTest extends TestCase
 {

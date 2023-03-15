@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Shared\Factory\GrowthFactory;
 
 /**
- *
+ * Class ShowingUserGrowthServiceTest
  */
 class ShowingUserGrowthServiceTest extends TestCase
 {

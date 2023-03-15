@@ -4,9 +4,15 @@ namespace Talently\FeatureFlags\Data\Dtos;
 
 use Talently\FeatureFlags\Shared\ArrayReflectionSerialize;
 
+/**
+ * User of the feature flag service
+ * Class User
+ *
+ */
 class User
 {
     use ArrayReflectionSerialize;
+
     /**
      * @var int
      */
