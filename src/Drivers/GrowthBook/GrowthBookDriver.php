@@ -177,7 +177,7 @@ class GrowthBookDriver implements FeatureFlagService
         try {
             $apiResponse = $this->getResponse($url);
             if (!empty($apiResponse) && !empty($apiResponse["features"])) {
-                return$apiResponse["features"];
+                return $apiResponse["features"];
             }
         }catch (\Exception $e) {
             return null;
