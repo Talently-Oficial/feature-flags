@@ -34,7 +34,35 @@ class StartGrowthServiceTest extends TestCase
     public function itLoadFeatures():void {
         $service = $this->getGrowthFeatureFlagService();
         $service->__construct('');
-         $this->assertTrue(!is_null($service->features()), " it should load features");
+        $this->assertTrue(!is_null($service->features()), " it should load features");
+    }
+    /**
+     * @test
+     */
+    public function itLoadFeaturesAttempts():void {
+        $service = GrowthFactory::make()
+            ->partialMock()
+        ;
+
+        $service->shouldReceive('getResponse')
+            ->andReturn(null);
+
+        $service
+            ->shouldReceive('tryToConnect')
+            ->withArgs([
+                '',
+                null
+            ])
+            ->andReturn([
+                'fast-track' => [
+                    'defaultValue' => true
+                ]
+            ]);
+
+        $service->__construct('');
+        $features = $service->features();
+
+        $this->assertNotEmpty($features, " it should load features");
     }
 
     /**

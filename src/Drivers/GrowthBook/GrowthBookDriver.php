@@ -4,6 +4,7 @@ namespace Talently\FeatureFlags\Drivers\GrowthBook;
 
 use Growthbook\Growthbook;
 use Talently\FeatureFlags\Contracts\FeatureFlagService;
+use Talently\FeatureFlags\Data\Constants\ExceptionCode;
 use Talently\FeatureFlags\Data\Dtos\User;
 use Talently\FeatureFlags\Exceptions\NotFoundException;
 
@@ -30,13 +31,19 @@ class GrowthBookDriver implements FeatureFlagService
      * @var
      */
     private $user;
+    /**
+     * @var int
+     */
+    private $maxAttempts;
 
     /**
      * consume the growthbook api
      * @param string $url
+     * @param int $maxAttempts
      */
-    public function __construct(string  $url)
+    public function __construct(string  $url, int $maxAttempts = 3)
     {
+        $this->maxAttempts = $maxAttempts;
         $this->features =  $this->loadFeatures($url);
         $this->global = $this->makeGrowthBook();
 
@@ -45,17 +52,21 @@ class GrowthBookDriver implements FeatureFlagService
     /**
      * load features from the api
      * @param string $url
-     * @return mixed
+     * @return array
      */
-    public function loadFeatures(string $url)
+    public function loadFeatures(string $url): array
     {
-        $apiResponse = $this->getResponse($url);
-
-
-        if (empty($apiResponse) || empty($apiResponse["features"])){
-            throw new NotFoundException("Features not found in the response");
+        $feature = null;
+        $intent = 1;
+         while (is_null($feature) && $intent <= $this->maxAttempts){
+            $feature = $this->tryToConnect($url, $feature);
+             $intent++;
         }
-        return $apiResponse["features"];
+        if (is_null($feature)){
+            throw new NotFoundException("Features not found in the response object", ExceptionCode::NOT_FOUND);
+        }
+
+        return $feature;
     }
 
     /**
@@ -136,12 +147,7 @@ class GrowthBookDriver implements FeatureFlagService
      */
     public function getResponse(string $url)
     {
-        try
-        {
-            return json_decode(file_get_contents($url), true);
-        } catch (\Exception $e) {
-            throw new NotFoundException("Features not found in the response");
-        }
+        return json_decode(file_get_contents($url), true);
     }
 
     /**
@@ -158,5 +164,24 @@ class GrowthBookDriver implements FeatureFlagService
     public function getGlobal(): ?Growthbook
     {
         return $this->global;
+    }
+
+    /**
+     * @param string $url
+     * @param $feature
+     * @param int $intent
+     * @return array
+     */
+    public function tryToConnect(string $url, $feature): ?array
+    {
+        try {
+            $apiResponse = $this->getResponse($url);
+            if (!empty($apiResponse) && !empty($apiResponse["features"])) {
+                return $apiResponse["features"];
+            }
+        }catch (\Exception $e) {
+            return null;
+        }
+        return $feature;
     }
 }

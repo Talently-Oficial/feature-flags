@@ -20,8 +20,7 @@ class GrowthFactory
      * @return Mock|(MockInterface&GrowthBookDriver)
      */
     public  function mock(){
-        $service = \Mockery::mock(GrowthBookDriver::class)
-            ->makePartial();
+        $service = $this->partialMock();
 
          $service->shouldReceive('getResponse')
             ->once()
@@ -29,6 +28,11 @@ class GrowthFactory
                 'features' => $this->features
             ]);
         return $service;
+    }
+
+    public function partialMock() {
+       return  \Mockery::mock(GrowthBookDriver::class)
+            ->makePartial();
     }
 
     /**
