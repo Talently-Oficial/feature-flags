@@ -15,9 +15,10 @@ class FakerService implements FeatureFlagService
     private $user;
 
     /**
-     * @param $config
+     * @param array $config
+     * [{nameFeature: true}, {nameFeature: false}]
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->config = $config;
      }
